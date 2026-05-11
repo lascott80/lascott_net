@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lascott.net/sitemap.xml
