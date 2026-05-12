@@ -44,12 +44,42 @@ p {
 }
 
 .stage {
+  --pointer-x: 0;
+  --pointer-y: 0;
   position: relative;
   display: grid;
   min-height: 100vh;
   place-items: center;
   isolation: isolate;
   padding: clamp(1.25rem, 3vw, 3rem);
+}
+
+.signature {
+  position: absolute;
+  right: clamp(1.25rem, 3vw, 3rem);
+  bottom: clamp(1rem, 2.5vw, 2rem);
+  z-index: 1;
+}
+
+.signature a {
+  color: rgba(248, 243, 232, 0.58);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-decoration: none;
+  text-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.28);
+  transition: color 180ms ease;
+}
+
+.signature a:hover,
+.signature a:focus-visible {
+  color: rgba(248, 243, 232, 0.92);
+}
+
+.signature a:focus-visible {
+  border-radius: 0.35rem;
+  outline: 2px solid rgba(111, 213, 255, 0.58);
+  outline-offset: 0.35rem;
 }
 
 .stage::before,
@@ -161,7 +191,13 @@ p {
   box-shadow:
     0 2.25rem 5rem rgba(0, 0, 0, 0.48),
     inset 0 1px rgba(255, 255, 255, 0.32);
-  transform: rotate(-2.5deg);
+  transform:
+    perspective(70rem)
+    rotateX(calc(var(--pointer-y) * -2deg))
+    rotateY(calc(var(--pointer-x) * 2.5deg))
+    rotate(-2.5deg);
+  transition: box-shadow 240ms ease, transform 240ms ease;
+  will-change: transform;
 }
 
 .portrait-shell::before {
@@ -195,7 +231,14 @@ p {
 
 .portrait {
   object-fit: cover;
-  transform: scale(1.015);
+  transform:
+    translate(
+      calc(var(--pointer-x) * -0.45rem),
+      calc(var(--pointer-y) * -0.35rem)
+    )
+    scale(1.035);
+  transition: transform 240ms ease;
+  will-change: transform;
 }
 
 .identity-panel {
@@ -213,6 +256,10 @@ p {
   text-shadow:
     0 1.25rem 3rem rgba(0, 0, 0, 0.26),
     0 0 2.5rem rgba(111, 213, 255, 0.12);
+}
+
+.identity-panel h1 span {
+  display: block;
 }
 
 .bio {
@@ -238,8 +285,19 @@ p {
   box-shadow:
     0 2rem 4rem rgba(0, 0, 0, 0.34),
     inset 0 1px rgba(255, 255, 255, 0.28);
+  transform:
+    perspective(70rem)
+    rotateX(calc(var(--pointer-y) * -1deg))
+    rotateY(calc(var(--pointer-x) * 1.3deg))
+    translate3d(
+      calc(var(--pointer-x) * 0.25rem),
+      calc(var(--pointer-y) * 0.18rem),
+      0
+    );
+  transition: box-shadow 240ms ease, transform 240ms ease;
   -webkit-backdrop-filter: blur(22px) saturate(1.25);
   backdrop-filter: blur(22px) saturate(1.25);
+  will-change: transform;
 }
 
 .link-box::before {
@@ -308,7 +366,21 @@ p {
   z-index: 2;
 }
 
-.link-pill svg {
+.link-label {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.78rem;
+}
+
+.brand-icon {
+  width: 1.55rem;
+  height: 1.55rem;
+  flex: 0 0 auto;
+  fill: currentColor;
+}
+
+.outbound-icon {
   width: 2rem;
   height: 2rem;
   flex: 0 0 auto;
@@ -362,6 +434,54 @@ p {
   --accent: #d7dce5;
 }
 
+.not-found {
+  text-align: center;
+}
+
+.not-found-panel {
+  position: relative;
+  display: grid;
+  width: min(100%, 33rem);
+  justify-items: center;
+  gap: 1.2rem;
+  padding: clamp(2rem, 6vw, 3.5rem);
+  border: 1px solid var(--line);
+  border-radius: 2rem;
+  background:
+    linear-gradient(155deg, rgba(255, 255, 255, 0.17), rgba(255, 255, 255, 0.055)),
+    linear-gradient(180deg, rgba(6, 18, 32, 0.72), rgba(8, 22, 38, 0.48));
+  box-shadow:
+    0 2.5rem 5rem rgba(0, 0, 0, 0.38),
+    inset 0 1px rgba(255, 255, 255, 0.25);
+  -webkit-backdrop-filter: blur(22px) saturate(1.2);
+  backdrop-filter: blur(22px) saturate(1.2);
+}
+
+.not-found-code {
+  color: var(--gold);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.not-found-panel h1 {
+  font-size: clamp(2.8rem, 8vw, 5rem);
+  font-weight: 800;
+  letter-spacing: -0.075em;
+  line-height: 0.92;
+  text-wrap: balance;
+}
+
+.not-found-panel h1 span {
+  display: block;
+}
+
+.home-link {
+  width: min(100%, 18rem);
+  margin-top: 0.35rem;
+}
+
 @keyframes arrival {
   from {
     opacity: 0.75;
@@ -393,7 +513,15 @@ p {
   .stage {
     align-items: center;
     min-height: 100svh;
-    padding: 1rem;
+    padding: 1rem 1rem 2.45rem;
+  }
+
+  .signature {
+    right: 0;
+    bottom: 0.8rem;
+    left: 0;
+    display: flex;
+    justify-content: center;
   }
 
   .landing-card {
@@ -446,6 +574,7 @@ p {
     gap: 0.72rem;
     padding: 0.85rem;
     border-radius: 1.55rem;
+    transform: none;
   }
 
   .link-pill {
@@ -458,6 +587,11 @@ p {
   .link-pill svg {
     width: 1.65rem;
     height: 1.65rem;
+  }
+
+  .brand-icon {
+    width: 1.35rem;
+    height: 1.35rem;
   }
 }
 
@@ -479,5 +613,11 @@ p {
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 1ms !important;
+  }
+
+  .portrait,
+  .portrait-shell,
+  .link-box {
+    transform: none;
   }
 }
