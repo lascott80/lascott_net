@@ -215,6 +215,16 @@ p {
     0 0 2.5rem rgba(111, 213, 255, 0.12);
 }
 
+.bio {
+  max-width: 24rem;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.5vw, 1.18rem);
+  font-weight: 650;
+  line-height: 1.45;
+  text-wrap: balance;
+  text-shadow: 0 0.85rem 2rem rgba(0, 0, 0, 0.22);
+}
+
 .link-box {
   position: relative;
   display: grid;
@@ -348,6 +358,10 @@ p {
   --accent: #8fdcff;
 }
 
+.github {
+  --accent: #d7dce5;
+}
+
 @keyframes arrival {
   from {
     opacity: 0.75;
@@ -396,7 +410,7 @@ p {
   }
 
   .portrait-shell {
-    width: min(82vw, 18.25rem);
+    width: min(74vw, 16.75rem);
     transform: rotate(0deg);
     border-radius: 2rem;
     box-shadow:
@@ -417,9 +431,15 @@ p {
   }
 
   .identity-panel h1 {
-    font-size: clamp(2.95rem, 15vw, 4.15rem);
+    font-size: clamp(2.8rem, 13vw, 3.75rem);
     letter-spacing: -0.085em;
     line-height: 0.88;
+  }
+
+  .bio {
+    max-width: 19rem;
+    justify-self: center;
+    font-size: 1rem;
   }
 
   .link-box {
@@ -429,10 +449,10 @@ p {
   }
 
   .link-pill {
-    min-height: 4.05rem;
+    min-height: 3.75rem;
     padding-inline: 1.15rem;
     border-radius: 1.1rem;
-    font-size: 1.35rem;
+    font-size: 1.26rem;
   }
 
   .link-pill svg {
@@ -443,11 +463,11 @@ p {
 
 @media (max-width: 380px) {
   .portrait-shell {
-    width: min(78vw, 16.5rem);
+    width: min(72vw, 14.5rem);
   }
 
   .identity-panel h1 {
-    font-size: clamp(2.55rem, 14vw, 3.4rem);
+    font-size: clamp(2.45rem, 12vw, 3.15rem);
   }
 }
 
